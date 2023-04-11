@@ -24,11 +24,11 @@ const getCountry = async (req, res) => {
       console.log("data loaded");
       res.status(200).json(dataCountries);
     } else {
-      console.log("data is on db");
+      console.log("data is already loaded on db");
       res.status(200).json(dataDb);
     }
   } catch (error) {
-    console.log("error en la carga");
+    console.log("load error");
     res.status(500).json(error.message);
   }
 };
@@ -37,12 +37,12 @@ const getCountryById = async (req, res) => {
   const { id } = req.params;
   const countryId = id.toUpperCase();
   try {
-    const country = await Country.findByOne({
+    const country = await Country.findOne({
       where: { id: countryId },
       include: { model: Activity },
     });
     if (!country) {
-      res.status(400).json({ message: "Country not found" });
+      res.status(400).json("Country not found");
     } else {
       res.status(200).json(country);
     }
@@ -52,14 +52,14 @@ const getCountryById = async (req, res) => {
 };
 
 const getCountryByName = async (req, res) => {
-  const { countryName } = req.params;
+  const { name } = req.params;
   try {
-    const country = await Country.findByOne({
-      where: { name: countryName },
+    const country = await Country.findOne({
+      where: { name: name },
       include: { model: Activity },
     });
     if (!country) {
-      res.status(400).json({ message: "Country not found" });
+      res.status(400).json("Country not found");
     } else {
       res.status(200).json(country);
     }
