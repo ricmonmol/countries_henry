@@ -83,10 +83,10 @@ export function getActivity() {
   }
 }
 
-export function filter(status) {
+export function filter(filter) {
   return {
     type: FILTER,
-    payload: status,
+    payload: filter,
   };
 }
 
