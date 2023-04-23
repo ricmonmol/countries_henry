@@ -41,6 +41,7 @@ const getCountryById = async (req, res) => {
       where: { id: countryId },
       include: { model: Activity },
     });
+    console.log("ID: " + id);
     if (!country) {
       res.status(400).json("Country not found");
     } else {
@@ -63,6 +64,7 @@ const getCountryByName = async (req, res) => {
     } else {
       res.status(200).json(country);
     }
+    console.log("name: " + name);
   } catch (error) {
     res.status(404).json(error.message);
   }

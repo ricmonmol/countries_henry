@@ -41,7 +41,7 @@ export function getCountryById(id) {
 export function getCountryByName(name) {
   try {
     return async function (dispatch) {
-      let response = await axios.get(`${URL}/name/${name}`);
+      let response = await axios.get(`${URL}/countries/name/${name}`);
       return dispatch({
         type: GET_COUNTRY_NAME,
         payload: response.data,
