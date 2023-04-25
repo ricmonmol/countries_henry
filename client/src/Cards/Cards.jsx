@@ -1,12 +1,13 @@
-import {useSelector} from "react-redux"
+import {useSelector} from "react-redux";
 import Card from "../Card/Card"
 
-function Cards(){
-	const countries = useSelector((state) => state.countries)
+function Cards({ countries }){
 
+  	const country = useSelector((state) => state.countries);
+	const countriesRender = countries.length > 0 ? countries : country;
 	return(
 		<div>
-			{countries.map((c, i)=>{
+			{countriesRender.map((c, i)=>{
 				return(
 			<Card 
 				key={i++}
@@ -16,7 +17,6 @@ function Cards(){
 				continent={c.continent}
 				/>
 				)})}
-			{console.log(countries)}
 		</div>	
 	)
 		

@@ -44,7 +44,7 @@ export function rootReducer(state = initialState, action) {
         activities: action.payload,
       };
     case FILTER:
-      let filteredCountries = [...state.countries];
+      let filteredCountries = state.countries;
       let { filterType, filterValue } = action.payload;
       let filterApplied;
       if (filterType === "Continente") {
@@ -57,9 +57,14 @@ export function rootReducer(state = initialState, action) {
           c.activities.some((a) => a.name === filterValue)
         );
       }
+      if (filterType === "Nombre") {
+        filterApplied = filteredCountries.filter((c) =>
+          c.name.toLowerCase().includes(filterValue.toLowerCase())
+        );
+      }
       return {
         ...state,
-        filteredCountries: [...filterApplied],
+        filteredCountries: filterApplied,
       };
     case ORDER:
       let sortedCountries;

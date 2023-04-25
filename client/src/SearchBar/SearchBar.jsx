@@ -1,17 +1,17 @@
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { getCountryByName } from "../Redux/actions"
+import { useEffect, useState } from "react"
 
-function SearchBar(){
-	const dispatch = useDispatch()
+function SearchBar({ onSearch, setCountryFilter }){
 	const [name, setName] = useState('')
 	const formatName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
 
 	function handleSubmit(e){
 		e.preventDefault()
-		dispatch(getCountryByName(formatName))
-		console.log(formatName)
+		onSearch(formatName)
 	}
+
+	useEffect(() => {
+		setCountryFilter(name)
+	},[setCountryFilter, name])
 
 	return(
 		<div>
@@ -22,7 +22,6 @@ function SearchBar(){
 			name={name}
 			onChange={e => setName(e.target.value)}
 			/>
-			<button type='submit'>Buscar</button>
 			</form>
 		</div>
 	)
