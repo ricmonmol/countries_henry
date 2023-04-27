@@ -5,7 +5,8 @@ export const GET_COUNTRY_NAME = "GET_COUNTRY_NAME";
 export const ADD_ACTIVITY = "ADD_ACTIVITY";
 export const GET_ACTIVITY = "GET_ACTIVITY";
 export const FILTER = "FILTER";
-export const ORDER = "ORDER";
+export const ORDER_NAME = "ORDER_NAME";
+export const ORDER_POPULATION = "ORDER_POPULATION";
 const URL = "http://localhost:3001";
 
 export function getCountry() {
@@ -90,9 +91,16 @@ export function filter(filter) {
   };
 }
 
-export function order(id) {
+export function orderName(id) {
   return {
-    type: ORDER,
+    type: ORDER_NAME,
+    payload: id,
+  };
+}
+
+export function orderPopulation(id) {
+  return {
+    type: ORDER_POPULATION,
     payload: id,
   };
 }

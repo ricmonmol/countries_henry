@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filter, getCountry, getCountryByName } from "./Redux/actions";
 import SearchBar from "./SearchBar/SearchBar";
+import Nav from "./Nav/Nav";
 
 function App() {
   const location = useLocation();
@@ -21,13 +22,20 @@ function App() {
 
   useEffect(() => {
     dispatch(filter({ filterType: "Nombre", filterValue: countryFilter }));
-    console.log("country filter", countryFilter);
+    if (countryFilter.length >= 4) {
+      dispatch(getCountryByName(countryFilter)).then((res) => {
+        setSearchResult([res.payload]);
+
+        console.log("res", res);
+        console.log("country filter", countryFilter);
+      });
+    }
   }, [dispatch, countryFilter]);
 
   function handleSearch(name) {
     dispatch(getCountryByName(name)).then((res) => {
-      console.log("res", res);
       setSearchResult([res.payload]);
+      console.log("res", res);
     });
   }
 
@@ -37,10 +45,13 @@ function App() {
     <div className="App">
       <h1>Henry Countries</h1>
       {location.pathname !== "/" && (
-        <SearchBar
-          setCountryFilter={setCountryFilter}
-          onSearch={handleSearch}
-        />
+        <div>
+          <SearchBar
+            setCountryFilter={setCountryFilter}
+            onSearch={handleSearch}
+          />
+          <Nav />
+        </div>
       )}
       <Routes>
         <Route exact path="/" element={<HomeButton />} />
@@ -54,5 +65,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

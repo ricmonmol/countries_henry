@@ -10,8 +10,8 @@ function SearchBar({ onSearch, setCountryFilter }){
 	}
 
 	useEffect(() => {
-		setCountryFilter(name)
-	},[setCountryFilter, name])
+		setCountryFilter(formatName)
+	},[setCountryFilter, formatName])
 
 	return(
 		<div>

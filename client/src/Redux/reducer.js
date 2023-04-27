@@ -5,9 +5,10 @@ import {
   ADD_ACTIVITY,
   GET_ACTIVITY,
   FILTER,
-  ORDER,
+  ORDER_NAME,
+  ORDER_POPULATION,
 } from "./actions";
-
+var sortedCountries;
 const initialState = {
   countries: [],
   activities: [],
@@ -46,36 +47,49 @@ export function rootReducer(state = initialState, action) {
     case FILTER:
       let filteredCountries = state.countries;
       let { filterType, filterValue } = action.payload;
-      let filterApplied;
       if (filterType === "Continente") {
-        filterApplied = filteredCountries.filter(
+        filteredCountries = filteredCountries.filter(
           (c) => c.continent === filterValue
         );
       }
       if (filterType === "Actividad") {
-        filterApplied = filteredCountries.filter((c) =>
+        filteredCountries = filteredCountries.filter((c) =>
           c.activities.some((a) => a.name === filterValue)
         );
       }
       if (filterType === "Nombre") {
-        filterApplied = filteredCountries.filter((c) =>
+        filteredCountries = filteredCountries.filter((c) =>
           c.name.toLowerCase().includes(filterValue.toLowerCase())
         );
       }
       return {
         ...state,
-        filteredCountries: filterApplied,
+        countries: filteredCountries,
       };
-    case ORDER:
-      let sortedCountries;
-      if (action.payload === "Nombre") {
+    case ORDER_NAME:
+      if (action.payload === "Ascendente") {
         sortedCountries = [...state.countries].sort((a, b) => {
           return a.name > b.name ? 1 : -1;
         });
       }
-      if (action.payload === "Poblacion") {
+      if (action.payload === "Descendente") {
         sortedCountries = [...state.countries].sort((a, b) => {
-          return b.population > a.population ? 1 : -1;
+          return a.name > b.name ? -1 : 1;
+        });
+      }
+      return {
+        ...state,
+        countries: sortedCountries,
+      };
+    case ORDER_POPULATION:
+      if (action.payload === "Ascendente") {
+        sortedCountries = [...state.countries].sort((a, b) => {
+          return a.population > b.population ? 1 : -1;
+        });
+      }
+      if (action.payload === "Descendente") {
+        sortedCountries = [...state.countries].sort((a, b) => {
+          return a.population > b.population ? -1 : 1;
         });
       }
       return {
