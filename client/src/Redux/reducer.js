@@ -8,7 +8,6 @@ import {
   ORDER_NAME,
   ORDER_POPULATION,
 } from "./actions";
-var sortedCountries;
 const initialState = {
   countries: [],
   activities: [],
@@ -16,6 +15,7 @@ const initialState = {
   filteredCountries: [],
   sortedCountries: [],
 };
+var sortedCountries;
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -64,7 +64,7 @@ export function rootReducer(state = initialState, action) {
       }
       return {
         ...state,
-        countries: filteredCountries,
+        filteredCountries: filteredCountries,
       };
     case ORDER_NAME:
       if (action.payload === "Ascendente") {
@@ -79,22 +79,22 @@ export function rootReducer(state = initialState, action) {
       }
       return {
         ...state,
-        countries: sortedCountries,
+        filteredCountries: sortedCountries,
       };
     case ORDER_POPULATION:
       if (action.payload === "Ascendente") {
-        sortedCountries = [...state.countries].sort((a, b) => {
+        sortedCountries = [...state.filteredCountries].sort((a, b) => {
           return a.population > b.population ? 1 : -1;
         });
       }
       if (action.payload === "Descendente") {
-        sortedCountries = [...state.countries].sort((a, b) => {
+        sortedCountries = [...state.filteredCountries].sort((a, b) => {
           return a.population > b.population ? -1 : 1;
         });
       }
       return {
         ...state,
-        countries: sortedCountries,
+        filteredCountries: sortedCountries,
       };
     default:
       return state;

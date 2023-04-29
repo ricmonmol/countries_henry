@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, useLocation, Route } from "react-router-dom";
+import { Routes, useLocation, Route, Link } from "react-router-dom";
 import HomeButton from "./HomeButton/HomeButton";
 import Cards from "./Cards/Cards";
 import CountryDetail from "./CountryDetail/CountryDetail";
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filter, getCountry, getCountryByName } from "./Redux/actions";
 import SearchBar from "./SearchBar/SearchBar";
 import Nav from "./Nav/Nav";
+import CreateActivityForm from "./CreateActivityForm/CreateActivityForm";
 
 function App() {
   const location = useLocation();
@@ -25,9 +26,6 @@ function App() {
     if (countryFilter.length >= 4) {
       dispatch(getCountryByName(countryFilter)).then((res) => {
         setSearchResult([res.payload]);
-
-        console.log("res", res);
-        console.log("country filter", countryFilter);
       });
     }
   }, [dispatch, countryFilter]);
@@ -35,11 +33,10 @@ function App() {
   function handleSearch(name) {
     dispatch(getCountryByName(name)).then((res) => {
       setSearchResult([res.payload]);
-      console.log("res", res);
     });
   }
 
-  console.log(filteredCountries);
+  console.log("cards: ", filteredCountries);
 
   return (
     <div className="App">
@@ -51,6 +48,7 @@ function App() {
             onSearch={handleSearch}
           />
           <Nav />
+          <Link to="/home/createactivityform">Crear Actividad</Link>
         </div>
       )}
       <Routes>
@@ -61,6 +59,11 @@ function App() {
           element={<Cards countries={filteredCountries} />}
         />
         <Route exact path="/countries/:id" element={<CountryDetail />} />
+        <Route
+          exact
+          path="/home/createactivityform"
+          element={<CreateActivityForm />}
+        />
       </Routes>
     </div>
   );

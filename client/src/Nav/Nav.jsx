@@ -44,15 +44,16 @@ function Nav(){
 				<option value='Ascendente'>Ascendente</option>
 				<option value='Descendente'>Descendente</option>
 			</select>
-			<p>Filtrar por Población: </p>
+			<p>Filtrar por Continente: </p>
 			<select onChange={handleFilter} name='Continente'>
-				<option value='todos'>Todos</option>
+				<option disabled selected value>Elegir una opción</option>
+				{/*<option value='todos'>Todos</option>*/}
 				<option value='Africa'>Africa</option>
 				<option value='Asia'>Asia</option>
-				<option value='North America'>Norte America</option>
-				<option value='South America'>Sud America</option>
 				<option value='Europe'>Europa</option>
+				<option value='North America'>Norte America</option>
 				<option value='Oceania'>Oceania</option>
+				<option value='South America'>Sud America</option>
 			</select>
 		</div>
 	)
