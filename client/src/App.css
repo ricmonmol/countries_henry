@@ -1,5 +1,45 @@
 .App {
+  background-image: url("./assets/map.jpg");
+  background-repeat: repeat-y;
+  background-size: 100%;
   text-align: center;
+  /*background: linear-gradient(
+    90deg,
+    rgba(115, 121, 9, 1) 15%,
+    rgba(233, 199, 118, 0.9864320728291317) 52%,
+    rgba(0, 212, 255, 1) 94%
+  );*/
+}
+
+.App h1 {
+  font-family: "Luckiest Guy", cursive;
+  margin: auto;
+  padding-top: 25px;
+  background: linear-gradient(
+    90deg,
+    rgba(251, 63, 101, 1) 18%,
+    rgba(252, 213, 70, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 5px;
+  font-size: 50px;
+}
+
+.div-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 10px 0;
+}
+
+.A-app {
+  text-decoration: none;
+  background-color: cadetblue;
+  color: cornsilk;
+  padding: 10px;
+  margin: auto;
+  border-radius: 10px;
 }
 
 .App-logo {

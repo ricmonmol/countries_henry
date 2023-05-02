@@ -1,3 +1,4 @@
+import style from './HomeButton.module.css'
 import { useNavigate } from 'react-router-dom'
 
 function HomeButton(){
@@ -7,8 +8,8 @@ function HomeButton(){
 		navigate('/home')
 	}
 	return(
-		<button onClick={handleHomeClick}>
-			Start
+		<button className={style.btnStart}  onClick={handleHomeClick}>
+			START
 		</button>
 	)
 }

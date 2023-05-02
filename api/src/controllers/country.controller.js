@@ -4,9 +4,12 @@ const URL = "https://restcountries.com/v3/all";
 
 const getCountry = async (req, res) => {
   try {
-    const dataDb = await Country.findAll();
+    const dataDb = await Country.findAll({
+      include: { model: Activity },
+    });
     if (dataDb.length === 0) {
       const response = await axios.get(`${URL}`);
+      console.log("paises: ", response.data);
       const dataCountries = response.data.map((c) => {
         return {
           id: c.cca3,
@@ -14,21 +17,20 @@ const getCountry = async (req, res) => {
           image: c.flags[0],
           continent: c.continents[0],
           capital: c.capital !== undefined ? c.capital[0] : "Not found",
-          subregion: c.subregion,
-          area: c.area,
+          subregion:
+            c.subregion !== undefined ? c.subregion : "Not available data",
+          area: c.area !== undefined ? c.area : "Not available data",
           population: c.population,
+          activities: c.activities,
         };
       });
 
       await Country.bulkCreate(dataCountries);
-      console.log("data loaded");
       res.status(200).json(dataCountries);
     } else {
-      console.log("data is already loaded on db");
       res.status(200).json(dataDb);
     }
   } catch (error) {
-    console.log("load error");
     res.status(500).json(error.message);
   }
 };
@@ -41,7 +43,7 @@ const getCountryById = async (req, res) => {
       where: { id: countryId },
       include: { model: Activity },
     });
-    console.log("ID: " + id);
+    console.log("country: ", country);
     if (!country) {
       res.status(400).json("Country not found");
     } else {
@@ -64,7 +66,6 @@ const getCountryByName = async (req, res) => {
     } else {
       res.status(200).json(country);
     }
-    console.log("name: " + name);
   } catch (error) {
     res.status(404).json(error.message);
   }

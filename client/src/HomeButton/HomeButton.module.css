@@ -1,0 +1,18 @@
+.btnStart {
+  text-decoration: none;
+  background-color: lightblue;
+  border: none;
+  color: lightcoral;
+  padding: 30px 50px;
+  border-radius: 15px;
+  font-size: x-large;
+  transition: ease-out 0.5s;
+  font-weight: bold;
+  margin: 20% 0 30% 0;
+}
+
+.btnStart:hover {
+  background-color: lightcoral;
+  color: lightblue;
+  box-shadow: 0 0 30px darksalmon;
+}

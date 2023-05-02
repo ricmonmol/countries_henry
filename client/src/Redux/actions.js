@@ -5,6 +5,7 @@ export const GET_COUNTRY_NAME = "GET_COUNTRY_NAME";
 export const ADD_ACTIVITY = "ADD_ACTIVITY";
 export const GET_ACTIVITY = "GET_ACTIVITY";
 export const FILTER = "FILTER";
+export const RESET_FILTER = "RESET_FILTER";
 export const ORDER_NAME = "ORDER_NAME";
 export const ORDER_POPULATION = "ORDER_POPULATION";
 const URL = "http://localhost:3001";
@@ -13,6 +14,7 @@ export function getCountry() {
   try {
     return async function (dispatch) {
       let response = await axios.get(`${URL}/countries`);
+      console.log("paises: ", response);
       return dispatch({
         type: GET_COUNTRY,
         payload: response.data,
@@ -88,6 +90,12 @@ export function filter(filter) {
   return {
     type: FILTER,
     payload: filter,
+  };
+}
+
+export function resetFilter() {
+  return {
+    type: RESET_FILTER,
   };
 }
 

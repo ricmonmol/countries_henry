@@ -5,7 +5,12 @@ import Cards from "./Cards/Cards";
 import CountryDetail from "./CountryDetail/CountryDetail";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filter, getCountry, getCountryByName } from "./Redux/actions";
+import {
+  filter,
+  getActivity,
+  getCountry,
+  getCountryByName,
+} from "./Redux/actions";
 import SearchBar from "./SearchBar/SearchBar";
 import Nav from "./Nav/Nav";
 import CreateActivityForm from "./CreateActivityForm/CreateActivityForm";
@@ -19,6 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getCountry());
+    dispatch(getActivity());
   }, [dispatch]);
 
   useEffect(() => {
@@ -36,19 +42,19 @@ function App() {
     });
   }
 
-  console.log("cards: ", filteredCountries);
-
   return (
     <div className="App">
-      <h1>Henry Countries</h1>
+      <h1>THE COUNTRIES APP</h1>
       {location.pathname !== "/" && (
-        <div>
+        <div className="div-nav">
           <SearchBar
             setCountryFilter={setCountryFilter}
             onSearch={handleSearch}
           />
           <Nav />
-          <Link to="/home/createactivityform">Crear Actividad</Link>
+          <Link className="A-app" to="/home/createactivityform">
+            Crear Actividad
+          </Link>
         </div>
       )}
       <Routes>

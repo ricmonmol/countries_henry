@@ -7,6 +7,7 @@ import {
   FILTER,
   ORDER_NAME,
   ORDER_POPULATION,
+  RESET_FILTER,
 } from "./actions";
 const initialState = {
   countries: [],
@@ -66,6 +67,12 @@ export function rootReducer(state = initialState, action) {
         ...state,
         filteredCountries: filteredCountries,
       };
+    case RESET_FILTER:
+      return {
+        ...state,
+        filteredCountries: state.countries,
+      };
+
     case ORDER_NAME:
       if (action.payload === "Ascendente") {
         sortedCountries = [...state.countries].sort((a, b) => {

@@ -1,3 +1,4 @@
+import style from './CountryDetail.module.css'
 import {useEffect} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
@@ -13,13 +14,19 @@ function CountryDetail(){
 	}, [dispatch, id])
 
 	return(
-		<div>
-			<img src={country.image} alt={country.name}/>
-			<h1>{country.name}</h1>
-			<p>Capital: {country.capital}</p>
-			<p>Continent: {country.continent}</p>
-			<p>population: {country.population}</p>
-			<Link to={'/home'}> BACK HOME</Link>
+		<div className={style.divDetail}>
+			<div className={style.divContent}>
+					<img src={country.image} alt={country.name}/>
+				<div className={style.detailText}>
+					<h2>{country.name}</h2>
+					<p>Capital: {country.capital}</p>
+					<p>Continent: {country.continent}</p>
+					<p>Subregion: {country.subregion}</p>
+					<p>Area: {country.area.toLocaleString()} m2</p>
+					<p>Population: {country.population.toLocaleString()} people.</p>
+				</div>
+			</div>
+				<Link className={style.detailBtn}  to={'/home'}> BACK HOME</Link>
 		</div>
 	)
 }
