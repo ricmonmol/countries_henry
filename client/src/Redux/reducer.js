@@ -8,6 +8,7 @@ import {
   ORDER_NAME,
   ORDER_POPULATION,
   RESET_FILTER,
+  PAGINATE,
 } from "./actions";
 const initialState = {
   countries: [],
@@ -15,8 +16,11 @@ const initialState = {
   country: {},
   filteredCountries: [],
   sortedCountries: [],
+  currentPage: 1,
+  paginatedCountries: [],
 };
 var sortedCountries;
+const countriesPerPage = 10;
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -24,6 +28,8 @@ export function rootReducer(state = initialState, action) {
       return {
         ...state,
         countries: action.payload,
+        sortedCountries: action.payload,
+        filteredCountries: action.payload,
       };
     case GET_COUNTRY_ID:
       return {
@@ -54,9 +60,10 @@ export function rootReducer(state = initialState, action) {
         );
       }
       if (filterType === "Actividad") {
-        filteredCountries = filteredCountries.filter((c) =>
-          c.activities.some((a) => a.name === filterValue)
-        );
+        filteredCountries = filteredCountries.filter((c) => {
+          const res = c.activities.some((a) => a.name === filterValue);
+          return res;
+        });
       }
       if (filterType === "Nombre") {
         filteredCountries = filteredCountries.filter((c) =>
@@ -75,33 +82,44 @@ export function rootReducer(state = initialState, action) {
 
     case ORDER_NAME:
       if (action.payload === "Ascendente") {
-        sortedCountries = [...state.countries].sort((a, b) => {
+        sortedCountries = state.filteredCountries.sort((a, b) => {
           return a.name > b.name ? 1 : -1;
         });
       }
       if (action.payload === "Descendente") {
-        sortedCountries = [...state.countries].sort((a, b) => {
+        sortedCountries = state.filteredCountries.sort((a, b) => {
           return a.name > b.name ? -1 : 1;
         });
       }
       return {
         ...state,
-        filteredCountries: sortedCountries,
+        sortedCountries: sortedCountries,
       };
     case ORDER_POPULATION:
       if (action.payload === "Ascendente") {
-        sortedCountries = [...state.filteredCountries].sort((a, b) => {
+        sortedCountries = state.filteredCountries.sort((a, b) => {
           return a.population > b.population ? 1 : -1;
         });
       }
       if (action.payload === "Descendente") {
-        sortedCountries = [...state.filteredCountries].sort((a, b) => {
+        sortedCountries = state.filteredCountries.sort((a, b) => {
           return a.population > b.population ? -1 : 1;
         });
       }
       return {
         ...state,
-        filteredCountries: sortedCountries,
+        sortedCountries: sortedCountries,
+      };
+    case PAGINATE:
+      var currentPage = action.payload;
+      let offset = (currentPage - 1) * countriesPerPage;
+      const paginatedCountries = state.sortedCountries.filter(
+        (_, index) => index >= offset && index < offset + countriesPerPage
+      );
+      return {
+        ...state,
+        paginatedCountries: paginatedCountries,
+        currentPage: currentPage,
       };
     default:
       return state;

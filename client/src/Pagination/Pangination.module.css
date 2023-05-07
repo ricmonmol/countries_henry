@@ -1,0 +1,14 @@
+.ulPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style: none;
+}
+
+.liPage {
+  padding: 0 10px;
+  background-color: #f2e3db;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}

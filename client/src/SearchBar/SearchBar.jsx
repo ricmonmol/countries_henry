@@ -1,3 +1,4 @@
+import style from './SearchBar.module.css'
 import { useEffect, useState } from "react"
 
 function SearchBar({ onSearch, setCountryFilter }){
@@ -17,6 +18,7 @@ function SearchBar({ onSearch, setCountryFilter }){
 		<div>
 			<form onSubmit={handleSubmit}>
 			<input
+			className={style.searchBar}
 			type='search' 
 			placeholder="Enter name"
 			name={name}

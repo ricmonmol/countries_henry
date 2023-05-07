@@ -10,22 +10,33 @@ import {
   getActivity,
   getCountry,
   getCountryByName,
+  orderName,
+  paginate,
 } from "./Redux/actions";
 import SearchBar from "./SearchBar/SearchBar";
 import Nav from "./Nav/Nav";
 import CreateActivityForm from "./CreateActivityForm/CreateActivityForm";
+import Pagination from "./Pagination/Pagination";
 
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const countries = useSelector((state) => state.countries);
+  const sortedCountries = useSelector((state) => state.sortedCountries);
   const filteredCountries = useSelector((state) => state.filteredCountries);
+  const paginatedCountries = useSelector((state) => state.paginatedCountries);
   const [searchResult, setSearchResult] = useState([]);
   const [countryFilter, setCountryFilter] = useState("");
+  const couPerPage = 10;
 
   useEffect(() => {
     dispatch(getCountry());
     dispatch(getActivity());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(paginate(1));
+  }, [dispatch, countries, sortedCountries, filteredCountries]);
 
   useEffect(() => {
     dispatch(filter({ filterType: "Nombre", filterValue: countryFilter }));
@@ -34,6 +45,7 @@ function App() {
         setSearchResult([res.payload]);
       });
     }
+    dispatch(orderName("Ascendente"));
   }, [dispatch, countryFilter]);
 
   function handleSearch(name) {
@@ -55,6 +67,10 @@ function App() {
           <Link className="A-app" to="/home/createactivityform">
             Crear Actividad
           </Link>
+          <Pagination
+            countries={filteredCountries.length}
+            couPerPage={couPerPage}
+          />
         </div>
       )}
       <Routes>
@@ -62,7 +78,7 @@ function App() {
         <Route
           exact
           path="/home"
-          element={<Cards countries={filteredCountries} />}
+          element={<Cards countries={paginatedCountries} />}
         />
         <Route exact path="/countries/:id" element={<CountryDetail />} />
         <Route

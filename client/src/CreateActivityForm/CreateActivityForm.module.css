@@ -19,7 +19,9 @@
   align-items: flex-start;
   flex-direction: column;
   background-color: #f2e3db;
-  padding: 10px 100%;
+  padding: 25px;
+  border-radius: 25px;
+  margin-bottom: 25px;
 }
 
 .labels input,
@@ -59,7 +61,7 @@ select {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 50px;
 }
 
 .bckBtn {

@@ -1,12 +1,17 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import { filter, orderName, orderPopulation, resetFilter } from "../Redux/actions"
+import { paginate, filter, getCountry, orderName, orderPopulation, resetFilter } from "../Redux/actions"
 import style from './Nav.module.css'
 
 function Nav(){
 	const dispatch = useDispatch()
 	const activities = useSelector(state => state.activities)
 	const [selectedContinent, setSelectedContinent] = useState('')
+	const [selectedActivity, setSelectedActivity] = useState('')
+
+	useEffect(() =>{
+		dispatch(getCountry())
+	}, [dispatch, activities])
 
 	function handleDispatch(e){
 		if(e.target.name === 'Nombre'){
@@ -26,6 +31,7 @@ function Nav(){
 				dispatch(orderPopulation(e.target.value))
 			}
 		}
+		dispatch(paginate(1))
 	}
 
 	function handleFilter(e){
@@ -35,13 +41,16 @@ function Nav(){
 			dispatch(filter({filterType: 'Continente', filterValue}))
 		}
 		if(e.target.name === 'Actividad'){
-			setSelectedContinent(filterValue)
+			setSelectedActivity(filterValue)
 			dispatch(filter({filterType: 'Actividad', filterValue}))
 		}
+		dispatch(orderName('Ascendente'))
+		dispatch(paginate(1))
 	}
 
 	function handleRemoveFilter(){
 		setSelectedContinent('')
+		setSelectedActivity('')
 		dispatch(resetFilter())
 	}
 
@@ -71,12 +80,12 @@ function Nav(){
 			</select>
 			<p>Filtrar por Actividad: </p>
 			<select onChange={handleFilter} name='Actividad'>
-				<option disabled selected={selectedContinent === ''} value>Elegir una opción</option>
+				<option disabled selected={selectedActivity === ''} value>Elegir una opción</option>
 				{activities.map((a, i) => (
-					<option key={i++} selected={selectedContinent === `${a.name}`} value={a.name}>{a.name}</option>
+					<option key={i++} selected={selectedActivity === `${a.name}`} value={a.name}>{a.name}</option>
 				))}
 			</select>
-			<input type='button' onClick={handleRemoveFilter} value='Limpiar Filtros' />
+			<input className={style.inputBtn} type='button' onClick={handleRemoveFilter} value='Limpiar Filtros' />
 		</div>
 	)
 }

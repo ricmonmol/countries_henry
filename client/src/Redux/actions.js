@@ -8,6 +8,7 @@ export const FILTER = "FILTER";
 export const RESET_FILTER = "RESET_FILTER";
 export const ORDER_NAME = "ORDER_NAME";
 export const ORDER_POPULATION = "ORDER_POPULATION";
+export const PAGINATE = "PAGINATE";
 const URL = "http://localhost:3001";
 
 export function getCountry() {
@@ -110,5 +111,12 @@ export function orderPopulation(id) {
   return {
     type: ORDER_POPULATION,
     payload: id,
+  };
+}
+
+export function paginate(n) {
+  return {
+    type: PAGINATE,
+    payload: n,
   };
 }

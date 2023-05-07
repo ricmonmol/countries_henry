@@ -8,6 +8,7 @@
   background-color: #f2e3db;
   border-radius: 25px;
   padding-bottom: 10px;
+  transition: ease-in 0.5s;
 }
 
 .divCard h2 {
@@ -16,4 +17,8 @@
 .divCard a {
   text-decoration: none;
   color: chocolate;
+}
+
+.divCard:hover {
+  box-shadow: 0 5px 25px black;
 }

@@ -40,6 +40,11 @@
   padding: 10px;
   margin: auto;
   border-radius: 10px;
+  transition: ease-in 0.5s;
+}
+.A-app:hover {
+  background-color: cornsilk;
+  color: cadetblue;
 }
 
 .App-logo {
