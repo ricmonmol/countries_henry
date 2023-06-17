@@ -14,6 +14,9 @@ Si elegís un país se puede acceder a su detalle:
 Como también se puede ordenar, buscar y filtrar:
 ![nav](./client/src/assets/nav.png)
 
+Renderiza según lo que escribes:
+![serach](./client/src/assets/search.png)
+
 Y cargar actividades de cada país:
 
 ![form](./client/src/assets/form.png)
