@@ -15,4 +15,5 @@ Como también se puede ordenar, buscar y filtrar:
 ![nav](./client/src/assets/nav.png)
 
 Y cargar actividades de cada país:
+
 ![form](./client/src/assets/form.png)
